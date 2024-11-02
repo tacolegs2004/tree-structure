@@ -54,7 +54,7 @@ function App() {
 
 function FileTree({ name, children }: TFile) {
   if (!children) {
-    return <li>{name}</li>;
+    return <li className="list-disc">{name}</li>;
   }
   return (
     <div>
@@ -83,14 +83,14 @@ function Folders({ name, children }: TFile) {
 
 function Folder({ children, name }: TFile) {
   if (!children) {
-    return <li>{name}</li>;
+    return <li className="list-disc">{name}</li>;
   }
 
   return (
     <details>
       <summary>{name}</summary>
       {children.map((child) => (
-        <li className="ml-16">{child.name}</li>
+        <li className="ml-16 list-disc">{child.name}</li>
       ))}
     </details>
   );
