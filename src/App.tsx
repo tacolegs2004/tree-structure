@@ -19,6 +19,9 @@ const files = {
                 {
                   name: "type.d.ts",
                 },
+                {
+                  name: "joi.d.ts",
+                },
               ],
             },
             {
@@ -34,7 +37,7 @@ const files = {
     {
       name: "vite.config.ts",
     },
-  ],
+  ] as TFile[],
 };
 
 function App() {
@@ -50,13 +53,17 @@ function App() {
 }
 
 function FileTree({ name, children }: TFile) {
+  if (!children) {
+    return <li>{name}</li>;
+  }
   return (
     <div>
-      {children?.map((child) => (
-        <Folders {...child} />
-      ))}
-
-      <li>{name}</li>
+      <details>
+        <summary className="-ml-16">src</summary>
+        {children.map((child) => (
+          <Folders {...child} />
+        ))}
+      </details>
     </div>
   );
 }
@@ -65,7 +72,7 @@ function Folders({ name, children }: TFile) {
   return (
     <div>
       <details>
-        <summary className="-ml-20">{name}</summary>
+        <summary className="-ml-10">{name}</summary>
         {children?.map((child) => (
           <Folder {...child} />
         ))}
