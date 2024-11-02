@@ -15,6 +15,11 @@ const files = {
           children: [
             {
               name: "types",
+              children: [
+                {
+                  name: "type.d.ts",
+                },
+              ],
             },
             {
               name: "docs",
@@ -32,34 +37,6 @@ const files = {
   ],
 };
 
-function File({ name, children }: TFile) {
-  return (
-    <>
-      <li className="list-disc">{name}</li>
-      {children &&
-        children.map((child) => (
-          <>
-            <details>
-              <summary>{child.name}</summary>
-              {child.children &&
-                child.children.map((c) =>
-                  c.children ? (
-                    c.children.map((child) => (
-                      <details className="ml-8">
-                        <summary>{child.name}</summary>
-                      </details>
-                    ))
-                  ) : (
-                    <p className="ml-8">{c.name}</p>
-                  )
-                )}
-            </details>
-          </>
-        ))}
-    </>
-  );
-}
-
 function App() {
   return (
     <div>
@@ -69,6 +46,46 @@ function App() {
         ))}
       </ul>
     </div>
+  );
+}
+
+function File({ name, children }: TFile) {
+  return (
+    <div>
+      {children?.map((child) => (
+        <FileTree {...child} />
+      ))}
+
+      <li>{name}</li>
+    </div>
+  );
+}
+
+function FileTree({ name, children }: TFile) {
+  return (
+    <div>
+      <details>
+        <summary className="-ml-20">{name}</summary>
+        {children?.map((child) => (
+          <FileItem {...child} />
+        ))}
+      </details>
+    </div>
+  );
+}
+
+function FileItem({ children, name }: TFile) {
+  if (!children) {
+    return <li>{name}</li>;
+  }
+
+  return (
+    <details>
+      <summary>{name}</summary>
+      {children.map((child) => (
+        <li className="ml-16">{child.name}</li>
+      ))}
+    </details>
   );
 }
 
