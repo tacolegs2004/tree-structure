@@ -42,21 +42,9 @@ function App() {
     <div>
       <ul>
         {files.src.map((file) => (
-          <File {...file} />
+          <FileTree {...file} />
         ))}
       </ul>
-    </div>
-  );
-}
-
-function File({ name, children }: TFile) {
-  return (
-    <div>
-      {children?.map((child) => (
-        <FileTree {...child} />
-      ))}
-
-      <li>{name}</li>
     </div>
   );
 }
@@ -64,17 +52,29 @@ function File({ name, children }: TFile) {
 function FileTree({ name, children }: TFile) {
   return (
     <div>
+      {children?.map((child) => (
+        <Folders {...child} />
+      ))}
+
+      <li>{name}</li>
+    </div>
+  );
+}
+
+function Folders({ name, children }: TFile) {
+  return (
+    <div>
       <details>
         <summary className="-ml-20">{name}</summary>
         {children?.map((child) => (
-          <FileItem {...child} />
+          <Folder {...child} />
         ))}
       </details>
     </div>
   );
 }
 
-function FileItem({ children, name }: TFile) {
+function Folder({ children, name }: TFile) {
   if (!children) {
     return <li>{name}</li>;
   }
